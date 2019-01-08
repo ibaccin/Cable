@@ -7,7 +7,7 @@ class accountController extends Controller
 {
     public function indexAction()
     {
-        if($REQUEST_METHOD["GET"])
+        if($_SERVER["REQUEST_METHOD"] == "GET")
         {
             $this->renderView("views/account/index.php");
         } else {
@@ -16,7 +16,13 @@ class accountController extends Controller
     }
     public function registerAction()
     {
-        $this->renderView("views/account/register.php");
+        if($_SERVER["REQUEST_METHOD"] == "GET")
+        {
+            $this->renderView("views/account/register.php");
+        } else {
+            $registration = registerModel::registrate($_POST);
+            //header('Location: /home');
+        } 
     }
     
    

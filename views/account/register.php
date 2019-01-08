@@ -35,7 +35,7 @@
                 <label for="inputFile">You can choose your photo</label>
                 <input name="user_avatar" type="file" class="form-control" id="inputFile">
             </div>
-            <button type="submit" class="btn btn-dark">Login</button>
+            <button type="submit" class="btn btn-dark">Registrate</button>
         </form>
     </div>
 </div>

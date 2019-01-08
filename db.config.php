@@ -1,5 +1,5 @@
 <?php
 const servername = "localhost";
-const dbname = "saleboard";
+const dbname = "cable";
 const username = "root";
 const password = "";
