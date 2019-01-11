@@ -8,9 +8,44 @@ class accountModel extends Model
     
     public function rules()
     {
-        return ["id","firstName","lastName","birthday","email"];
+        return ["user_email","user_password"];
     }
-    
+    public function login()
+    {
+        try
+        {
+            if( $_SERVER["REQUEST_METHOD"] == "POST" &&
+                isset($_POST["user_email"]) == TRUE &&
+                preg_match("/[a-zA-Z._\-0-9]*\@[a-z0-9]*\.[a-z0-9]{3,5}/", $_POST["user_email"]) &&
+                isset($_POST["user_password"]) == TRUE  )
+            {
+                $userLogin = trim(htmlspecialchars($this->user_email));
+                $hashedPass = self::hashPass($this->user_password);
+                
+                $conn = new PDO("mysql:host=".servername.";dbname=".dbname, username, password);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $stmt = $conn->prepare("SELECT `id_user`, `name`, `surname`, `birthday`,`phone`,`user_email`,`user_avatar`,`user_role` FROM `".self::$tableName."`
+                                        WHERE `user_email` = '$userLogin' AND `user_password` = '$hashedPass';"); 
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+                foreach($result as $inside)
+                {
+                    foreach($inside as $key=>$value)
+                    {
+                        if(!is_int($key))
+                        {
+                            $_SESSION["$key"] = $value;
+                        }
+                    }
+                }
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+    }
    
 }
 

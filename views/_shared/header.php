@@ -1,3 +1,20 @@
+<?php
+$login = "<a class='nav-link login' href='/account'>Log In/Up</a>";
+if(!empty($_SESSION))
+{
+  $login = "<div class='dropdown'>
+              <a class='nav-link  login dropdown-toggle' href='#' id='userMenu' role='button' data-toggle='dropdown' aria-haspopup='true' 
+              aria-expanded='false'><img class='navavatar' src='".$_SESSION["user_avatar"]."'/>Hello, ".$_SESSION["name"]."</a>
+              <div class='dropdown-menu' aria-labelledby='userMenu'>
+                <a class='dropdown-item' href='/account/profile'>Profile</a>
+                <a class='dropdown-item' href='#'>Another action</a>
+                <div class='dropdown-divider'></div>
+                <a class='dropdown-item' href='#'>Something diff</a>
+              </div>
+            </div>
+            <a class='nav-link login' href='/account/logOut'>Log out</a>";
+};
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,20 +41,8 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-
     </ul>
-    <a class="nav-link login" href="/account">Log In/Up</a>
+    <?=$login?>
     
   </div>
 </nav>

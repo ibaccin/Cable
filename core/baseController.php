@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Controller
 {
     public function renderView($view, $model = null, $useLayout = true)
