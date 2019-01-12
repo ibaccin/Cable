@@ -41,8 +41,10 @@
             <div class="profile-avatar">
                 <img class="profile-image" src="<?=$_SESSION["user_avatar"]?>"/>
                 <hr>
-                <form method="POST">
-                    
+                <form class="form-change" method="POST" id="profile_form_change" enctype="multipart/form-data">
+                    <input class="invisible" id="input_change_file" type="file" name="user_avatar" />
+                    <lable class="btn btn-warning" id="lable_change">Take the ava</lable> <hr>
+                    <button class="btn btn-primary" id="submit_form" type="submit">Save change</button>
                 </form>
                 <a class="btn btn-primary" id="profile_change">Change photo</a>
             </div>

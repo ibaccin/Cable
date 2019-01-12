@@ -46,6 +46,40 @@ class accountModel extends Model
         }
         $conn = null;
     }
+    public static function changePhoto()
+    {
+        try
+        {
+            $maxSize = 1024*4*1024;
+            if( !empty($_FILES["user_avatar"]["size"]) &&
+                $_FILES["user_avatar"]["size"] <= $maxSize && 
+                preg_match( "/^image\/(jpg|png|jpeg|svg)$/", $_FILES["user_avatar"]["type"]) ){
+                    $oldCover = $_SESSION["user_avatar"];
+                    $currId = $_SESSION["id_user"];
+                    if($oldCover != "/image/default/default_avatar.jpg")
+                    {
+                        $unLinkStr = mb_substr( $oldCover, 1);
+                        unlink($unLinkStr);
+                    };
+                    $format =  explode("/",$_FILES["user_avatar"]["type"]);
+                    $created_covers_url = "image/users_cover/".md5(microtime()).".".$format[1];
+                    move_uploaded_file( $_FILES["user_avatar"]["tmp_name"], $created_covers_url);   
+                    $created_covers_url = "/$created_covers_url";
+                    $conn = new PDO("mysql:host=".servername.";dbname=".dbname, username, password);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    $sql = "UPDATE `users` SET `user_avatar`= '$created_covers_url' WHERE `id_user`=$currId";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $_SESSION["user_avatar"] = "$created_covers_url";
+                };
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+    }
    
 }
 

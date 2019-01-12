@@ -25,7 +25,8 @@ class accountController extends Controller
         {
             $this->renderView("views/account/profile.php");
         } else {
-            
+            $change = accountModel::changePhoto($_POST);
+            $this->renderView("views/account/profile.php");
         }        
     }
 
