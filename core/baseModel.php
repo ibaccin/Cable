@@ -12,15 +12,6 @@ class Model
         return true;
     }
     
-    public function validate()
-    {
-        if(empty($this->name) || empty($this->password))
-        {
-            return false;
-        }
-        
-        return true;
-    }
     //database components
     const  SALT = "orinal_name_for_salt";
     public static function hashPass($pass)
